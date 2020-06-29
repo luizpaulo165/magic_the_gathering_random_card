@@ -5,6 +5,9 @@ body{
     margin:0;
     overflow:hidden;
 }
+pre{
+    color:white;
+}
 [wrap-card-page]{
     width:100%;
     height:100vh;
@@ -40,7 +43,233 @@ body{
     display:block;
     position:relative;
     top:0;
-    left:0;
+    left:0px;
     z-index:0;
-    opacity:0.3;
+    opacity:0;
+    transform:translateX(-50px);
+}
+[bg-card-page] span[active="true"]{
+    opacity:0.5;
+    transform:translateX(0px);
+    transition:0.8s all ease-in-out;
+}
+[loading-bar]{
+    background-color:#ea4b12;
+    width:35%;
+    height:3px;
+    display:block;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index: 100;
+    animation-name: loadingStep1;
+    animation-duration: 1s;
+}
+[loading-bar][complete="true"]{
+    width:100%;
+    opacity:0;
+    animation-name: loadingStep2;
+    animation-duration: 1.5s;
+}
+@keyframes loadingStep1 {
+    0% {width:0;}
+    100% {width:35%;}
+}
+@keyframes loadingStep2 {
+    0% {width:35%;opacity:1;}
+    80% {width:100%;opacity:1;}
+    100% {opacity:0;}
+}
+
+[wrap-content-card]{
+    width:90vw;
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: row;
+    margin:0 auto;
+    position: relative;
+    z-index:100;
+}
+[card-preview]{
+    width:600px;
+    display:block;
+    position: relative;
+}
+[card-preview] [img-fake],
+[card-preview]:before,
+[card-preview]:after{
+    background-image:url('/images/mtg-card-back.png');
+    background-position:center;
+    background-size:contain;
+    background-repeat: no-repeat;
+    content:'';
+    width:420px;
+    height:0;
+    display:block;
+    padding-top:117.1%;
+    position: absolute;
+    top: 12px;
+    left: 35px;
+    border-radius:22px;
+    opacity:0;
+}
+/* [card-preview] [img-fake]{
+    left:50%;
+    transform:translateX(-50%) rotate(0) scale(1);
+    transition:0.1s all ease-in-out;
+    z-index:20;
+} */
+[card-preview]:before{
+    z-index:2;
+    transform:rotate(0) scale(1);
+    transition:0.3s all ease-in-out;
+}
+[card-preview]:after{
+    z-index:1;
+    transform:rotate(0) scale(1);
+    transition:0.3s all ease-in-out;
+}
+[card-preview][active="true"]:before{
+    /* transform:rotate(-7deg); */
+    opacity:1;
+    transform:translateY(0%) rotate(-7deg);
+    animation-name: flipActiveCardLeft;
+    animation-duration: 1.3s;
+}
+[card-preview][active="true"]:after{
+    /* transform:rotate(7deg); */
+    opacity:1;
+    transform:translateY(0%) rotate(7deg);
+    animation-name: flipActiveCardRight;
+    animation-duration: 1.4s;
+}
+[card-preview][active="true"] figure{
+    transform:translateY(0%);
+    z-index:10;
+    opacity:1;
+    animation-name: flipActiveCard;
+    animation-duration: 1s;
+}
+@keyframes flipActiveCard {
+    0% {
+        transform:translateY(100%);
+        opacity:0;
+    }
+    100% {
+        transform:translateY(0%);
+        opacity:1;
+    }
+}
+@keyframes flipActiveCardLeft {
+    0% {
+        transform:translateY(100%) rotate(0deg);
+        opacity:0;
+    }
+    50% {
+        transform:translateY(0%) rotate(0deg);
+        opacity:1;
+    }
+    100% {
+        transform:translateY(0%) rotate(7deg);
+        opacity:1;
+    }
+}
+@keyframes flipActiveCardRight {
+    0% {
+        transform:translateY(100%) rotate(0deg);
+        opacity:0;
+    }
+    50% {
+        transform:translateY(0%) rotate(0deg);
+        opacity:1;
+    }
+    100% {
+        transform:translateY(0%) rotate(-7deg);
+        opacity:1;
+    }
+}
+[card-preview] figure,
+.flip-box{
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size: contain;
+    width:420px;
+    height:0;
+    display:block;
+    padding-top:117.1%;
+    position: relative;
+    overflow:hidden;
+    border-radius:22px;
+    z-index: 10;
+    opacity:0;
+}
+[card-info]{
+    /* flex:1; */
+}
+
+.flip-box {
+    background-color: transparent;
+    perspective: 1000px;
+    overflow:visible;
+}
+.flip-box img{
+    border-radius:22px;
+    overflow: hidden;
+}
+
+.flip-box .rotate-btn{
+    background-color:#9dff00;
+    background-image:url('/images/rotate.svg');
+    background-size:50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width:32px;
+    height:32px;
+    display:block;
+    position: absolute;
+    top: 3rem;
+    right: 1.7rem;
+    border-radius:50px;
+    z-index:1000;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    cursor:pointer;
+}
+
+.flip-box[fliped="true"] .flip-box-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-box-inner {
+    text-align: center;
+    width: 420px;
+    position: absolute;
+    top:0;
+    left:0;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-box-front,
+.flip-box-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.flip-box-front img,
+.flip-box-back img{
+    width:83.9%;
+}
+
+.flip-box-front {
+    color: black;
+}
+
+.flip-box-back {
+    transform: rotateY(180deg);
 }

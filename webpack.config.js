@@ -76,6 +76,7 @@ const config = {
     }),
     new CopyPlugin([
       { from: 'icons', to: 'icons', ignore: ['icon.xcf'] },
+      { from: 'images', to: 'images' },
       { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
       { from: 'tab/tab.html', to: 'tab/tab.html', transform: transformHtml },
       {
