@@ -108,86 +108,46 @@ pre{
     width:420px;
     height:0;
     display:block;
-    padding-top:117.1%;
+    padding-top:117%;
     position: absolute;
     top: 12px;
     left: 35px;
-    border-radius:22px;
-    opacity:0;
+    border-radius:24px;
+    filter:drop-shadow(0px 5px 1px rgba(0,0,0,0.2));
 }
-/* [card-preview] [img-fake]{
+[card-preview] [img-fake]{
     left:50%;
     transform:translateX(-50%) rotate(0) scale(1);
     transition:0.1s all ease-in-out;
-    z-index:20;
-} */
+    z-index:4;
+}
 [card-preview]:before{
     z-index:2;
-    transform:rotate(0) scale(1);
-    transition:0.3s all ease-in-out;
+    transform:translate(-10px,0) rotate(-7deg);
 }
 [card-preview]:after{
     z-index:1;
-    transform:rotate(0) scale(1);
-    transition:0.3s all ease-in-out;
+    transform:translate(15px,15px) rotate(10deg);
 }
-[card-preview][active="true"]:before{
-    /* transform:rotate(-7deg); */
-    opacity:1;
-    transform:translateY(0%) rotate(-7deg);
-    animation-name: flipActiveCardLeft;
-    animation-duration: 1.3s;
-}
-[card-preview][active="true"]:after{
-    /* transform:rotate(7deg); */
-    opacity:1;
-    transform:translateY(0%) rotate(7deg);
-    animation-name: flipActiveCardRight;
-    animation-duration: 1.4s;
-}
-[card-preview][active="true"] figure{
-    transform:translateY(0%);
-    z-index:10;
-    opacity:1;
+[card-preview][active="true"] figure,
+[card-preview][active="true"] .flip-box{
+    transform:translate(0%,0%);
+    z-index:5;
     animation-name: flipActiveCard;
     animation-duration: 1s;
 }
 @keyframes flipActiveCard {
     0% {
-        transform:translateY(100%);
-        opacity:0;
-    }
-    100% {
-        transform:translateY(0%);
-        opacity:1;
-    }
-}
-@keyframes flipActiveCardLeft {
-    0% {
-        transform:translateY(100%) rotate(0deg);
-        opacity:0;
+        transform:translate(0%,0%) rotate(10deg);
+        z-index:3;
     }
     50% {
-        transform:translateY(0%) rotate(0deg);
-        opacity:1;
+        transform:translate(100%, -20px) rotate(0deg);
+        z-index:3;
     }
     100% {
-        transform:translateY(0%) rotate(7deg);
-        opacity:1;
-    }
-}
-@keyframes flipActiveCardRight {
-    0% {
-        transform:translateY(100%) rotate(0deg);
-        opacity:0;
-    }
-    50% {
-        transform:translateY(0%) rotate(0deg);
-        opacity:1;
-    }
-    100% {
-        transform:translateY(0%) rotate(-7deg);
-        opacity:1;
+        transform:translate(0%,0%) rotate(0deg);
+        z-index:5;
     }
 }
 [card-preview] figure,
@@ -198,19 +158,16 @@ pre{
     width:420px;
     height:0;
     display:block;
-    padding-top:117.1%;
+    padding-top:117%;
     position: relative;
     overflow:hidden;
-    border-radius:22px;
-    z-index: 10;
-    opacity:0;
-}
-[card-info]{
-    /* flex:1; */
+    border-radius:24px;
+    z-index: 3;
 }
 
 .flip-box {
     background-color: transparent;
+    width:500px;
     perspective: 1000px;
     overflow:visible;
 }
@@ -225,15 +182,15 @@ pre{
     background-size:50%;
     background-position: center;
     background-repeat: no-repeat;
-    width:32px;
-    height:32px;
+    width:42px;
+    height:42px;
     display:block;
     position: absolute;
-    top: 3rem;
-    right: 1.7rem;
+    top: 12%;
+    right: 15%;
     border-radius:50px;
     z-index:1000;
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    filter: drop-shadow(0 0px 10px rgba(0, 0, 0, 0.1));
     cursor:pointer;
 }
 
@@ -243,7 +200,7 @@ pre{
 
 .flip-box-inner {
     text-align: center;
-    width: 420px;
+    width: 100%;
     position: absolute;
     top:0;
     left:0;

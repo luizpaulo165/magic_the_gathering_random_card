@@ -7,7 +7,8 @@
         </div>
         <div wrap-content-card>
             <div card-preview :active="loadingDone">
-                <!-- <span img-fake></span> -->
+                <span img-fake></span>
+
                 <div class="flip-box" :fliped="flipCard" v-if="!loading && card.card_faces">
                     <div class="rotate-btn" @click="flipAction"></div>
                     <div class="flip-box-inner">
@@ -58,7 +59,7 @@ export default {
             const urlDuo = 'https://api.scryfall.com/cards/named?fuzzy=nicol-bolas-the-ravager-nicol-bolas-the-arisen';
             const urlRandom = 'https://api.scryfall.com/cards/random';
 
-            axios.get(`${urlRandom}`).then((response) => {
+            axios.get(`${url}`).then((response) => {
                that.card = response.data;
                that.loading = false;
                //
