@@ -1,6 +1,57 @@
+/* Icons */
+@import "../components/icons.css";
+[class*='-{'],
+[class*='-}']{
+    display:none;
+}
+
+/* Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 body{
     font-family: 'Open Sans', sans-serif;
-    background-color:black;
+    background-color:#000;
     padding:0;
     margin:0;
     overflow:hidden;
@@ -83,10 +134,9 @@ pre{
     top:0;
     right:40%;
 
-    background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
-    background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=1 );
+    background: -moz-linear-gradient(left,  rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+    background: -webkit-linear-gradient(left,  rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, 1) 100%);
+    background: linear-gradient(to right,  rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, 1) 100%);
 }
 [bg-card-page] span{
     background-position:center center;
@@ -137,17 +187,20 @@ pre{
 
 [wrap-content-card]{
     width:90vw;
-    height:100%;
+    height:calc(100vh - 140px);
     display: flex;
     align-items: center;
     justify-content:center;
     flex-direction: row;
     margin:0 auto;
-    position: relative;
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
     z-index:15;
 }
 [card-preview]{
-    width:600px;
+    width:520px;
     display:block;
     position: relative;
 }
@@ -195,7 +248,7 @@ pre{
     opacity:0;
 }
 [card-preview] .img-card img{
-    width:84%;
+    width:73%;
     position:absolute;
     top:50%;
     left:50%;
@@ -220,8 +273,8 @@ pre{
     height:42px;
     display:block;
     position: absolute;
-    top: 12%;
-    right: 15%;
+    top: 15%;
+    right: 22%;
     border-radius:50px;
     z-index:1000;
     filter: drop-shadow(0 0px 10px rgba(0, 0, 0, 0.1));
@@ -254,7 +307,7 @@ pre{
 }
 .flip-box-front img,
 .flip-box-back img{
-    width:84%;
+    width:72%;
     border-radius:26px;
 }
 
@@ -269,13 +322,22 @@ pre{
 [card-info]{
     flex:1;
     display:flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
-    padding-left:100px;
 }
 [wrap-infos]{
-    background:#fff;
     padding:2rem;
     border-radius:20px;
     box-sizing: border-box;
+}
+[title-card]{
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 700;
+    font-size: 48px;
+    margin-bottom: 5px;
+}
+
+[description-info] p{
+    color:#fff;
 }

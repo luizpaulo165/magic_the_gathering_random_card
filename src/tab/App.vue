@@ -32,8 +32,39 @@
             </div>
             <div card-info>
                 <div wrap-infos>
-                    <h2>{{ card.name }}</h2>
-                
+                    <div header-infos>
+                        <h2 title-card>{{ card.name }}</h2>
+                        <div mana-cout>
+                            <div v-if="!card.card_faces && manaCost">
+                                <i 
+                                    v-for="(mana, index) in manaCost" 
+                                    :key="'mana-' + index" 
+                                    :class="'card-symbol card-symbol-' + mana"
+                                >
+                                    {{ mana }}
+                                </i>
+                            </div>
+                            <div v-if="card.card_faces && manaCostArray[0]">
+                                <i 
+                                    v-for="(mana, index) in manaCostArray[0]" 
+                                    :key="'mana-' + index" 
+                                    :class="'card-symbol card-symbol-' + mana"
+                                >
+                                    {{ mana }}
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                    <div description-info>
+                        <div v-if="card.card_faces">
+                            <h5>{{ card.card_faces[0].type_line }}</h5>
+                            <p v-html="card.card_faces[0].oracle_text"></p>
+                            <h5>{{ card.card_faces[1].type_line }}</h5>
+                            <p>
+                                {{ card.card_faces[1].oracle_text }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,7 +92,9 @@ export default {
             loading: true,
             loadingDone: false,
             flipCard: false,
-            year: null
+            year: null,
+            manaCost: null,
+            manaCostArray: []
         }
     },
     mounted() {
@@ -70,22 +103,38 @@ export default {
         this.year = year;
         this.selectCard();
     },
+    filters: {
+        manaConvert(value) {
+            return value.replace(/[\])}[{(]/g, '');
+        },
+        manaOnText(value) {
+            const elem = value.match(/\{.\}/g)
+            return value.replace(/\{/g, `<span>`).replace(/}/g, `</span>`)
+        }
+    },
     methods: {
         flipAction() {
             this.flipCard = !this.flipCard;
-            console.log(0)
         },
         selectCard() {
             const that = this;
             this.loading = true;
-            const url = 'https://api.scryfall.com/cards/named?fuzzy=nikara-lair-scavenger';
+            const url = 'https://api.scryfall.com/cards/named?fuzzy=marionette-master';
             const urlDuo = 'https://api.scryfall.com/cards/named?fuzzy=nicol-bolas-the-ravager-nicol-bolas-the-arisen';
             const urlRandom = 'https://api.scryfall.com/cards/random';
 
-            axios.get(`${url}`).then((response) => {
+            axios.get(`${urlDuo}`).then((response) => {
                that.card = response.data;
                that.loading = false;
-               //
+
+                if (response.data.card_faces) {
+                    response.data.card_faces.filter(cur => {
+                        that.manaCostArray.push(this.$options.filters.manaConvert(cur.mana_cost))
+                    })
+                } else {
+                    that.manaCost = this.$options.filters.manaConvert(response.data.mana_cost);
+                }
+
                setTimeout(() => {
                    that.loadingDone = true;
                }, 1000)
