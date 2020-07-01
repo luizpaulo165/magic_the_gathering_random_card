@@ -58,11 +58,13 @@
                     <div description-info>
                         <div v-if="card.card_faces">
                             <h5>{{ card.card_faces[0].type_line }}</h5>
-                            <p v-html="card.card_faces[0].oracle_text"></p>
+                            <p v-html="$options.filters.textConvert(card.card_faces[0].oracle_text)"></p>
                             <h5>{{ card.card_faces[1].type_line }}</h5>
-                            <p>
-                                {{ card.card_faces[1].oracle_text }}
-                            </p>
+                            <p v-html="$options.filters.textConvert(card.card_faces[1].oracle_text)"></p>
+                        </div>
+                        <div v-if="!card.card_faces">
+                            <h5>{{ card.type_line }}</h5>
+                            <p v-html="$options.filters.textConvert(card.oracle_text)"></p>
                         </div>
                     </div>
                 </div>
@@ -94,7 +96,7 @@ export default {
             flipCard: false,
             year: null,
             manaCost: null,
-            manaCostArray: []
+            manaCostArray: [],
         }
     },
     mounted() {
@@ -107,9 +109,8 @@ export default {
         manaConvert(value) {
             return value.replace(/[\])}[{(]/g, '');
         },
-        manaOnText(value) {
-            const elem = value.match(/\{.\}/g)
-            return value.replace(/\{/g, `<span>`).replace(/}/g, `</span>`)
+        textConvert(string){
+            return string.replace(/\{(.*?)\}/gm, "<span class='card-symbol card-symbol-$1'>$1</span>").replace(/\.\s/g, '.<br>');
         }
     },
     methods: {
@@ -119,11 +120,11 @@ export default {
         selectCard() {
             const that = this;
             this.loading = true;
-            const url = 'https://api.scryfall.com/cards/named?fuzzy=marionette-master';
+            const url = 'https://api.scryfall.com/cards/named?fuzzy=chandras-pyreling';
             const urlDuo = 'https://api.scryfall.com/cards/named?fuzzy=nicol-bolas-the-ravager-nicol-bolas-the-arisen';
             const urlRandom = 'https://api.scryfall.com/cards/random';
 
-            axios.get(`${urlDuo}`).then((response) => {
+            axios.get(`${url}`).then((response) => {
                that.card = response.data;
                that.loading = false;
 
