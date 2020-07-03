@@ -8,28 +8,32 @@
                 </a>
             </div>
         </div>
-        <div bg-card-page>
-            <span v-if="card.card_faces[0].image_uris" :style="{'background-image':'url('+ card.card_faces[0].image_uris.art_crop +')'}" :active="loadingDone"></span>
-            <span v-if="!card.card_faces" :style="{'background-image':'url('+ card.image_uris.art_crop +')'}" :active="loadingDone"></span>
+        <div bg-card-page v-if="!loading">
+            <span v-if="card.card_faces && card.card_faces[0].image_uris" :style="{'background-image':'url('+ card.card_faces[0].image_uris.art_crop +')'}" :active="loadingDone"></span>
+            <span v-else :style="{'background-image':'url('+ card.image_uris.art_crop +')'}" :active="loadingDone"></span>
         </div>
-        <div wrap-content-card>
+        <div wrap-content-card v-if="!loading">
             <div card-preview :active="loadingDone">
-                <div class="flip-box" :fliped="flipCard" v-if="!loading && card.card_faces[0].image_uris">
+                <div class="flip-box" :fliped="flipCard" v-if="card.card_faces && card.card_faces[0].image_uris">
                     <div class="rotate-btn" @click="flipAction"></div>
                     <div class="flip-box-inner">
                         <div class="flip-box-front">
                             <img :src="card.card_faces[0].image_uris['large']" :title="card.card_faces[0].name" />
+                            <span class="card-foil" v-if="card.foil"></span>
                         </div>
                         <div class="flip-box-back">
                             <img :src="card.card_faces[1].image_uris['large']" :title="card.card_faces[1].name" />
+                            <span class="card-foil" v-if="card.foil"></span>
                         </div>
                     </div>
+                    
                     <div artist>
                         <span>Artist: <a :href="'https://www.google.com/search?&tbm=isch&q=magic+artist+' + card.artist">{{ card.artist }}</a></span>
                     </div>
                 </div>
                 <!-- Single Card -->
-                <div class="img-card" v-if="!loading && !card.card_faces[0].image_uris">
+                <div class="img-card" v-else>
+                    <span class="card-foil" v-if="card.foil"></span>
                     <img :src="card.image_uris['large']" :alt="card.name" :name="card.name">
 
                     <div artist>
@@ -37,52 +41,59 @@
                     </div>
                 </div>
             </div>
-            <div card-info>
+            <div card-info :active="loadingDone">
                 <div wrap-infos>
-                    <div header-infos>
-                        <h2 title-card>{{ card.name.replace(' // ', '\n') }}</h2>
-                        <div mana-cout>
-                            <div v-if="!card.card_faces && manaCost">
-                                <i 
-                                    v-for="(mana, index) in manaCost" 
-                                    :key="'mana-' + index" 
-                                    :class="'card-symbol card-symbol-' + mana"
-                                >
-                                    {{ mana }}
-                                </i>
+                    <div set-info>
+                        <img :src="cardSet['icon_svg_uri']" :alt="cardSet.name" :name="cardSet.name" />
+                        <span>{{ cardSet.name }}</span>
+                    </div>
+                    <div v-if="card.card_faces">
+                        <div faces-card v-for="(cardFace, car) in card.card_faces" :key="'cardFace' + car">
+                            <div header-infos>
+                                <h2 title-card :class="{'middle': cardFace.name.length >= 20}">{{ cardFace.name }}</h2>
+                                <div mana-cout>
+                                    <div>
+                                        <i 
+                                            v-for="(mana, index) in cardFace.mana_cost" 
+                                            :key="'mana-' + index" 
+                                            :class="'card-symbol card-symbol-' + mana"
+                                        >
+                                            {{ mana }}
+                                        </i>
+                                    </div>
+                                </div>
                             </div>
-                            <div v-if="card.card_faces && manaCostArray[0]">
-                                <i 
-                                    v-for="(mana, index) in manaCostArray[0]" 
-                                    :key="'mana-' + index" 
-                                    :class="'card-symbol card-symbol-' + mana"
-                                >
-                                    {{ mana }}
-                                </i>
+                            <div description-info>
+                                <h5 v-if="cardFace.color_indicator">
+                                    <i :class="'color-indicator color-indicator-' + colorConcat">{{ colorConcat }}</i>
+                                    {{ cardFace.type_line }}
+                                </h5>
+                                <h5 v-else>{{ cardFace.type_line }}</h5>
+                                <article v-html="$options.filters.textConvert(cardFace.oracle_text)"></article>
+                                <span flavor-text v-if="cardFace.flavor_text">
+                                    <i>{{ card.flavor_text }}</i>
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <div description-info>
-                        <div v-if="card.card_faces">
-                            <h5>{{ card.card_faces[0].type_line }} <img :src="cardSet['icon_svg_uri']" :alt="cardSet.name" :name="cardSet.name" /></h5>
-                            <article v-html="$options.filters.textConvert(card.card_faces[0].oracle_text)"></article>
-                            <h5>
-                                 <i 
-                                    v-if="card.card_faces[1].color_indicator"
-                                    :class="'color-indicator color-indicator-' + colorConcat"
-                                >
-                                    {{ colorConcat }}
-                                </i>
-                                {{ card.card_faces[1].type_line }}
-                            </h5>
-                            <article v-html="$options.filters.textConvert(card.card_faces[1].oracle_text)"></article>
+                    <div v-else>
+                        <div header-infos>
+                            <h2 title-card>{{ card.name }}</h2>
+                            <div mana-cout>
+                                <i v-html="manaCost"></i>
+                            </div>
                         </div>
-                        <div v-if="!card.card_faces">
-                            <h5>{{ card.type_line }} <img :src="cardSet['icon_svg_uri']" :alt="cardSet.name" :name="cardSet.name" /></h5>
-                            <article v-html="$options.filters.textConvert(card.oracle_text)"></article>
+                        <div description-info>
+                            <div>
+                                <h5>{{ card.type_line }}</h5>
+                                <article v-html="$options.filters.textConvert(card.oracle_text)"></article>
+                                <span flavor-text v-if="card.flavor_text">
+                                    <i>{{ card.flavor_text }}</i>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <div release><span>Relised in {{ card.released_at }}</span></div>
+                    <div release><span>Released in {{ card.released_at }}</span></div>
                 </div>
             </div>
         </div>
@@ -131,10 +142,10 @@ export default {
             return value.replace('-','/');
         },
         manaConvert(value) {
-            return value.replace(/[\])}[{(]/g, '');
+            return value.replace(/\//,'').replace(/\//,'').replace(/\//,'').replace(/\//,'').replace(/\//,'').replace(/\{(.*?)\}/gm, '<span class="card-symbol card-symbol-$1">$1</span>');
         },
         textConvert(string){
-            return string.replace(/\{(.*?)\}/gm, "<span class='card-symbol card-symbol-$1'>$1</span>").replace(/(.+?\n\n|.+?$)/gm, '<p>$1</p>');
+            return string.replace(/\{(.*?)\}/gm, "<span class='card-symbol card-symbol-$1'>$1</span>").replace(/(.+?\n\n|.+?$)/gm, '<p>$1</p>').replace(/\((.*?)\)/gm, '<i>($1)</i>');
         }
     },
     methods: {
@@ -144,11 +155,12 @@ export default {
         selectCard() {
             const that = this;
             this.loading = true;
-            const url = 'https://api.scryfall.com/cards/named?fuzzy=odds-ends';
+            const cabuloso = 'https://api.scryfall.com/cards/named?fuzzy=hit-run';
+            const url = 'https://api.scryfall.com/cards/named?fuzzy=benalish-honor-guard';
             const urlDuo = 'https://api.scryfall.com/cards/named?fuzzy=nicol-bolas-the-ravager-nicol-bolas-the-arisen';
             const urlRandom = 'https://api.scryfall.com/cards/random';
 
-            axios.get(`${url}`).then((response) => {
+            axios.get(`${urlRandom}`).then((response) => {
                that.card = response.data;
                that.loading = false;
 
@@ -167,12 +179,13 @@ export default {
                     }
                 } else {
                     that.manaCost = this.$options.filters.manaConvert(response.data.mana_cost);
+                    console.log(response.data.mana_cost)
                 }
 
                 if (response.data.set_uri) {
                     axios.get(`${response.data.set_uri}`).then((set) => {
                         that.cardSet = set.data;
-                        console.log(set.data)
+                        console.log(that.cardSet)
                     })
                 }
 

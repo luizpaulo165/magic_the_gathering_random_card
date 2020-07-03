@@ -200,6 +200,11 @@ pre{
     transform:translate(-50%,-50%);
     z-index:15;
 }
+@media (max-height: 660px){
+    [wrap-content-card]{
+        transform:translate(-50%,-50%) scale(0.8);
+    }
+}
 [card-preview]{
     width:520px;
     display:block;
@@ -248,7 +253,9 @@ pre{
     z-index: 3;
     opacity:0;
 }
-[card-preview] .img-card img{
+
+[card-preview] .img-card img,
+[card-preview] .img-card .card-foil{
     width:73%;
     position:absolute;
     top:50%;
@@ -256,12 +263,20 @@ pre{
     transform:translate(-50%,-50%);
     border-radius:26px;
 }
+[card-preview] .img-card .card-foil{
+    height:85%;
+    z-index:10;
+}
 
 .flip-box {
     background-color: transparent;
     padding-top:102%;
     perspective: 1000px;
     overflow:visible;
+}
+
+.flip-box [artist]{
+    bottom:-18px!important;
 }
 
 .flip-box .rotate-btn{
@@ -307,9 +322,19 @@ pre{
     backface-visibility: hidden;
 }
 .flip-box-front img,
-.flip-box-back img{
+.flip-box-back img,
+.flip-box-front .card-foil,
+.flip-box-back .card-foil{
     width:72%;
     border-radius:26px;
+}
+.flip-box-front .card-foil,
+.flip-box-back .card-foil{
+    height:0;
+    display:block;
+    padding-top:100.2%;
+    left:14%;
+    z-index:10;
 }
 
 .flip-box-front {
@@ -322,9 +347,19 @@ pre{
 
 [card-info]{
     flex:1;
+    min-width:40vw;
+    max-width:45vw;
     display:flex;
     align-items: flex-start;
     justify-content: flex-start;
+    transform:translateY(-5%);
+    opacity:0;
+}
+[card-info][active="true"]{
+    opacity:1;
+    transform:translateY(0%);
+    transition:1s all ease-in-out;
+    transition-delay:0.6s;
 }
 [wrap-infos]{
     padding:2rem;
@@ -336,8 +371,9 @@ pre{
     display:flex;
     align-items: center;
     justify-content: flex-start;
-    padding-bottom:15px;
-    margin-bottom:20px;
+    flex-wrap:wrap;
+    padding-bottom:10px;
+    margin-bottom:10px;
     position: relative;
 }
 [header-infos]:after{
@@ -349,14 +385,33 @@ pre{
     bottom:0;
     left:0;
 }
+[set-info]{
+    flex:0 0 100%;
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+[set-info] img{
+    max-width: 52px;
+    height:32px;
+    margin-right:10px;
+    filter:invert(100%);
+}
+[set-info] span{
+    font-weight: 600;
+    font-size: 18px;
+    color: #fff;
+}
 [title-card]{
     text-transform: uppercase;
     color: #fff;
     font-weight: 800;
     letter-spacing:1px;
-    font-size: 32px;
-    width:70%;
+    font-size: 38px;
     margin-right: 15px;
+}
+[title-card].middle{
+    font-size:32px;
 }
 [mana-cout]{
     flex:1;
@@ -376,11 +431,6 @@ pre{
     font-size: 20px;
     margin-bottom:5px;
 }
-[description-info] h5 img{
-    height:14px;
-    margin-left:10px;
-    filter: invert(100%);
-}
 [description-info] h5 img path {
     fill: white;
 }
@@ -388,11 +438,29 @@ pre{
     padding:10px 0;
 }
 [description-info] article p{
-    line-height:22px;
+    line-height:20px;
     font-size:16px;
     color: #fff;
     margin-bottom:4px;
     opacity:0.8;
+}
+[description-info] article p i{
+    font-weight: 600;
+    font-style:italic!important;
+}
+[description-info] [flavor-text]{
+    display:block;
+}
+[description-info] [flavor-text] i{
+    background:rgba(255,255,255,0.1);
+    font-weight: 300;
+    font-size:16px;
+    font-style:italic!important;
+    display:inline-block;
+    color: #fff;
+    padding:10px;
+    opacity:0.8;
+    border-radius:10px;
 }
 [artist]{
     position:absolute;
@@ -402,12 +470,50 @@ pre{
 }
 [artist] span,
 [artist] a{
+    font-style:italic;
+    letter-spacing: 1px;
     color:#fff;
     font-size:12px;
     text-decoration: none;
 }
+[release]{
+    display:block;
+    margin-top:20px;
+}
 [release] span{
     flex:0 0 100%;
+    font-style: italic;
     font-size: 14px;
     color: #fff;
+}
+
+.card-foil{
+    background:linear-gradient(233deg, #e56420, #c22525, #000, #3d9c31, #37bbde);
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-blend-mode: hard-light;
+    animation: hue-rotate 6s linear infinite;
+    position:absolute;
+    top:0;
+    left:0;
+    opacity:0.15;
+}
+.card-foil + img{
+    filter:contrast(1.1);
+}
+
+@keyframes hue-rotate {
+  from {
+    -webkit-filter: hue-rotate(0);
+    -moz-filter: hue-rotate(0);
+    -ms-filter: hue-rotate(0);
+    filter: hue-rotate(0);
+  }
+  to {
+    -webkit-filter: hue-rotate(360deg);
+    -moz-filter: hue-rotate(360deg);
+    -ms-filter: hue-rotate(360deg);
+    filter: hue-rotate(360deg);
+  }
 }
