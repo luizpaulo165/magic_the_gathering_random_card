@@ -3,9 +3,9 @@
         <div loading-bar :complete="loadingDone"></div>
         <div header-page>
             <div item>
-                <a href="https://magic.wizards.com/" class="logo">
-                    <img src="../images/MX_Nav_EN.png" alt="MTG">
-                </a>
+                <span class="logo">
+                    <img src="../images/mtg_random_cards.svg" alt="MTG">
+                </span>
             </div>
         </div>
         <div bg-card-page v-if="!loading">
@@ -18,12 +18,11 @@
                     <div class="rotate-btn" @click="flipAction"></div>
                     <div class="flip-box-inner">
                         <div class="flip-box-front">
-                            <img :src="card.card_faces[0].image_uris['large']" :title="card.card_faces[0].name" />
                             <span class="card-foil" v-if="card.foil"></span>
+                            <img :src="card.card_faces[0].image_uris['large']" :title="card.card_faces[0].name" />
                         </div>
                         <div class="flip-box-back">
                             <img :src="card.card_faces[1].image_uris['large']" :title="card.card_faces[1].name" />
-                            <span class="card-foil" v-if="card.foil"></span>
                         </div>
                     </div>
                     
@@ -71,14 +70,14 @@
                                 <h5 v-else>{{ cardFace.type_line }}</h5>
                                 <article v-html="$options.filters.textConvert(cardFace.oracle_text)"></article>
                                 <span flavor-text v-if="cardFace.flavor_text">
-                                    <i>{{ card.flavor_text }}</i>
+                                    <i>{{ cardFace.flavor_text }}</i>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div v-else>
                         <div header-infos>
-                            <h2 title-card>{{ card.name }}</h2>
+                            <h2 title-card :class="{'middle': card.name.length >= 20}">{{ card.name }}</h2>
                             <div mana-cout>
                                 <i v-html="manaCost"></i>
                             </div>
@@ -88,12 +87,29 @@
                                 <h5>{{ card.type_line }}</h5>
                                 <article v-html="$options.filters.textConvert(card.oracle_text)"></article>
                                 <span flavor-text v-if="card.flavor_text">
-                                    <i>{{ card.flavor_text }}</i>
+                                    <i>{{ card.flavor_text.replace(' —',' —\n').replace(' — ',' —\n') }}</i>
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <div release><span>Released in {{ card.released_at }}</span></div>
+                    <div legalities>
+                        <h4>Legalities in:</h4>
+                        <div col>
+                            <div v-for="(leg, l) in card.legalities" :key="'leg' + l">
+                                <div item v-if="leg == 'legal'">
+                                    <span :class="leg">{{ l }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div col>
+                            <div v-for="(leg, l) in card.legalities" :key="'no_leg' + l">
+                                <div item v-if="leg == 'not_legal'">
+                                    <span :class="leg">{{ l }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div release><span>Released in {{ card.released_at.replace('-','/').replace('-','/') }}</span></div>
                 </div>
             </div>
         </div>
@@ -155,8 +171,8 @@ export default {
         selectCard() {
             const that = this;
             this.loading = true;
-            const cabuloso = 'https://api.scryfall.com/cards/named?fuzzy=hit-run';
-            const url = 'https://api.scryfall.com/cards/named?fuzzy=benalish-honor-guard';
+            const cabuloso = 'https://api.scryfall.com/cards/named?fuzzy=bfm-(big-furry-monster)';
+            const url = 'https://api.scryfall.com/cards/named?fuzzy=naturalize';
             const urlDuo = 'https://api.scryfall.com/cards/named?fuzzy=nicol-bolas-the-ravager-nicol-bolas-the-arisen';
             const urlRandom = 'https://api.scryfall.com/cards/random';
 

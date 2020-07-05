@@ -74,7 +74,7 @@ pre{
     box-sizing: border-box;
 }
 [header-page] .logo{
-    height:64px;
+    height:46px;
     display:block;
 }
 [header-page] .logo img{
@@ -172,7 +172,7 @@ pre{
 }
 [loading-bar][complete="true"]{
     width:100%;
-    opacity:0;
+    opacity:1;
     animation-name: loadingStep2;
     animation-duration: 1.5s;
 }
@@ -182,8 +182,7 @@ pre{
 }
 @keyframes loadingStep2 {
     0% {width:35%;opacity:1;}
-    80% {width:100%;opacity:1;}
-    100% {opacity:0;}
+    100% {width:100%;opacity:1;}
 }
 
 [wrap-content-card]{
@@ -197,12 +196,17 @@ pre{
     position: absolute;
     left:50%;
     top:50%;
-    transform:translate(-50%,-50%);
+    transform:translate(-45%,-50%);
     z-index:15;
 }
-@media (max-height: 660px){
+@media screen and (min-width: 320px) and (max-width: 1028px){
     [wrap-content-card]{
-        transform:translate(-50%,-50%) scale(0.8);
+        transform:translate(-45%,-50%) scale(0.7);
+    }
+}
+@media screen and (max-height: 660px){
+    [wrap-content-card]{
+        transform:translate(-45%,-50%) scale(0.8);
     }
 }
 [card-preview]{
@@ -262,6 +266,9 @@ pre{
     left:50%;
     transform:translate(-50%,-50%);
     border-radius:26px;
+}
+[card-preview] .img-card img{
+    box-shadow: -34px 34px 16px rgba(0,0,0,0.2);
 }
 [card-preview] .img-card .card-foil{
     height:85%;
@@ -328,6 +335,10 @@ pre{
     width:72%;
     border-radius:26px;
 }
+.flip-box-front img,
+.flip-box-back img{
+    box-shadow: -54px 34px 16px rgba(0,0,0,0.2);
+}
 .flip-box-front .card-foil,
 .flip-box-back .card-foil{
     height:0;
@@ -347,21 +358,24 @@ pre{
 
 [card-info]{
     flex:1;
-    min-width:40vw;
-    max-width:45vw;
+    width:50vw;
+    max-width:720px;
+    min-width:720px;
     display:flex;
     align-items: flex-start;
     justify-content: flex-start;
-    transform:translateY(-5%);
+    transform:translate(-8%,-5%);
     opacity:0;
 }
 [card-info][active="true"]{
     opacity:1;
-    transform:translateY(0%);
+    transform:translate(-8%,0%);
     transition:1s all ease-in-out;
     transition-delay:0.6s;
 }
+
 [wrap-infos]{
+    width:100%;
     padding:2rem;
     border-radius:20px;
     box-sizing: border-box;
@@ -403,18 +417,20 @@ pre{
     color: #fff;
 }
 [title-card]{
+    /* flex:1; */
     text-transform: uppercase;
     color: #fff;
     font-weight: 800;
     letter-spacing:1px;
-    font-size: 38px;
-    margin-right: 15px;
+    font-size: 34px;
+    padding-right: 15px;
+    box-sizing: border-box;
 }
 [title-card].middle{
-    font-size:32px;
+    font-size:30px;
 }
 [mana-cout]{
-    flex:1;
+    /* flex:1; */
 }
 [mana-cout] .card-symbol{
     width:28px;
@@ -428,7 +444,8 @@ pre{
 [description-info] h5{
     color: #fff;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
+    font-style: italic;
     margin-bottom:5px;
 }
 [description-info] h5 img path {
@@ -455,6 +472,7 @@ pre{
     background:rgba(255,255,255,0.1);
     font-weight: 300;
     font-size:16px;
+    line-height:21px;
     font-style:italic!important;
     display:inline-block;
     color: #fff;
@@ -516,4 +534,52 @@ pre{
     -ms-filter: hue-rotate(360deg);
     filter: hue-rotate(360deg);
   }
+}
+
+[legalities]{
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top:10px;
+}
+[legalities] h4{
+    flex:0 0 100%;
+    font-size: 14px;
+    color:#fff;
+    margin-bottom:10px;
+}
+[legalities] [col]{
+    flex:0 0 50%;
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+[legalities] [item]{
+    height:22px;
+    margin:0 10px 0 0;
+}
+[legalities] [item] span{
+    text-transform: capitalize;
+    font-size:14px;
+    color:#fff;
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+[legalities] [item] span:before{
+    content:'';
+    width:10px;
+    height:10px;
+    display: block;
+    margin-right:5px;
+    position: relative;
+    border-radius:50px;
+}
+[legalities] [item] span.not_legal:before{
+    background:#c22525;
+}
+[legalities] [item] span.legal:before{
+    background:#3d9c31;
 }
