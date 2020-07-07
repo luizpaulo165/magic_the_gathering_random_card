@@ -4,7 +4,7 @@
         <div header-page>
             <div item>
                 <span class="logo">
-                    <img src="../images/mtg_random_cards.svg" alt="MTG">
+                    <img src="/images/mtg_random_cards.svg" alt="MTG">
                 </span>
             </div>
         </div>
@@ -116,7 +116,7 @@
 
         <div footer-page>
             <address>
-                <i>© 1993-{{ year }} Wizards of the Coast LLC, a subsidiary of Hasbro, Inc. All Rights Reserved.</i>
+                <i>© 1993-{{ year }} <a href="https://company.wizards.com/">Wizards of the Coast LLC</a>, a subsidiary of <a href="https://products.hasbro.com/">Hasbro</a>, Inc. All Rights Reserved.</i>
             </address>
             <span>Extenssion developed by <a href="https://twitter.com/papaulov">@papaulov</a>. API by <a href="https://scryfall.com/">Scryfall</a></span>
         </div>
@@ -172,7 +172,7 @@ export default {
             const that = this;
             this.loading = true;
             const cabuloso = 'https://api.scryfall.com/cards/named?fuzzy=bfm-(big-furry-monster)';
-            const url = 'https://api.scryfall.com/cards/named?fuzzy=naturalize';
+            const url = 'https://api.scryfall.com/cards/named?fuzzy=luminous-broodmoth';
             const urlDuo = 'https://api.scryfall.com/cards/named?fuzzy=nicol-bolas-the-ravager-nicol-bolas-the-arisen';
             const urlRandom = 'https://api.scryfall.com/cards/random';
 
@@ -180,7 +180,7 @@ export default {
                that.card = response.data;
                that.loading = false;
 
-               console.log(that.card)
+            //    console.log(that.card)
 
                 if (response.data.card_faces) {
                     response.data.card_faces.filter(cur => {
@@ -195,13 +195,13 @@ export default {
                     }
                 } else {
                     that.manaCost = this.$options.filters.manaConvert(response.data.mana_cost);
-                    console.log(response.data.mana_cost)
+                    // console.log(response.data.mana_cost)
                 }
 
                 if (response.data.set_uri) {
                     axios.get(`${response.data.set_uri}`).then((set) => {
                         that.cardSet = set.data;
-                        console.log(that.cardSet)
+                        // console.log(that.cardSet)
                     })
                 }
 
@@ -209,7 +209,7 @@ export default {
                    that.loadingDone = true;
                }, 1000)
             }).catch(function (error) {
-                console.log(error);
+                // console.log(error);
             });
         }
     }

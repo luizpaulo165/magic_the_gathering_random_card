@@ -1,5 +1,8 @@
+/* Font */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,800;1,300;1,400&display=swap");
 /* Icons */
 @import "../components/icons.css";
+
 [class*='-{'],
 [class*='-}']{
     display:none;
@@ -538,9 +541,10 @@ pre{
 
 [legalities]{
     display:flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
     flex-wrap: wrap;
+    flex-direction: column;
     margin-top:10px;
 }
 [legalities] h4{
@@ -550,10 +554,11 @@ pre{
     margin-bottom:10px;
 }
 [legalities] [col]{
-    flex:0 0 50%;
+    flex:0 0 100%;
     display:flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
+    flex-wrap: wrap;
 }
 [legalities] [item]{
     height:22px;

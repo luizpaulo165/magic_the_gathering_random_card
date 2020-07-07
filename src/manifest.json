@@ -1,15 +1,15 @@
 {
-  "name": "mtg_randomcard_chrome",
-  "description": "mtg_randomcard_chrome",
-  "version": null,
+  "name": "MRC - MTG Random Card",
+  "description": "Chrome extension based on MTG cards.",
+  "version": "1.1.4",
   "manifest_version": 2,
+  "permissions": ["https://fonts.googleapis.com/*"],
   "icons": {
-    "48": "icons/icon_48.png",
-    "128": "icons/icon_128.png"
-  },
-  "browser_action": {
-    "default_title": "mtg_randomcard_chrome",
-    "default_popup": "popup/popup.html"
+    "16": "./icons/icon16.png",
+    "32": "./icons/icon32.png",
+    "48": "./icons/icon48.png",
+    "128": "./icons/icon128.png",
+    "320": "./icons/icon320.png"
   },
   "background": {
     "scripts": [
