@@ -21,5 +21,8 @@ Created by Luiz Paulo Valença
 
 API REST by [Scryfall](https://scryfall.com/)
 
+#### Privacy Policy
+CLick [https://github.com/luizpaulo165/mtgat_random_card/blob/master/privacy_policy.md](https://github.com/luizpaulo165/mtgat_random_card/blob/master/privacy_policy.md)
+
 #### License 
 Licensed under [MIT](https://opensource.org/licenses/MIT)
