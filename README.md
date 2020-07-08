@@ -5,8 +5,8 @@ This extenssion was created for the Magic the Gathering's loves always staying w
 If you like MTG's arts and the game thats's your extenssion.
 
 ### v1.0.6 released
-===========
-Have some problem? Report me please. 
+====
+Have some problem? [Report me please.](https://github.com/luizpaulo165/mtgat_random_card/issues) 
 
 Notes
 ====
@@ -19,7 +19,7 @@ Informations
 Created by Luiz Paulo Valença
 > Twitter: @papaulov
 
-API REST by Scryfall(https://scryfall.com/)
+API REST by [Scryfall](https://scryfall.com/)
 
 #### License 
 Licensed under [MIT](https://opensource.org/licenses/MIT)
