@@ -4,7 +4,7 @@ Magic the Gathering' cards at in your new tabs.
 This extenssion was created for the Magic the Gathering's loves always staying with conected at the card game. 
 If you like MTG's arts and the game thats's your extenssion.
 
-v1.0.1 released
+### v1.0.6 released
 ===========
 Have some problem? Report me please. 
 
@@ -21,4 +21,5 @@ Created by Luiz Paulo Valença
 
 API REST by Scryfall(https://scryfall.com/)
 
-###license Licensed under MIT
+#### License 
+Licensed under [MIT](https://opensource.org/licenses/MIT)
