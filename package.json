@@ -1,6 +1,6 @@
 {
   "name": "mtg_randomcard_chrome",
-  "version": "1.1.1",
+  "version": "1.1.6",
   "description": "Chrome extension based on MTG cards.",
   "author": "Luiz Paulo Valença <luizpaulo165@gmail.com>",
   "engines": {
