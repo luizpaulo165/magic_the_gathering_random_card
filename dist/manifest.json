@@ -1,9 +1,10 @@
 {
   "name": "MRC - MTG Random Card",
-  "description": "Chrome extension based on MTG cards.",
-  "version": "1.1.6",
+  "description": "Extension based on MTG cards.",
+  "version": "1.1.7",
   "manifest_version": 2,
   "permissions": [
+    "tabs",
     "https://scryfall.com/*",
     "https://fonts.googleapis.com/*"
   ],

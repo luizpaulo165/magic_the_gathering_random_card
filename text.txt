@@ -18,3 +18,9 @@ Created by Luiz Paulo Valença
 > Twitter: @papaulov
 
 API REST by Scryfall(https://scryfall.com/)
+
+
+1. Install the application;
+2. Create a new tab on browser;
+3. Will show an one random card about Magic the Gathering;
+4. Show: One image and all description about the card;
