@@ -1,7 +1,7 @@
 {
-  "name": "mtg_randomcard_chrome",
-  "version": "1.1.7",
-  "description": "Extension based on MTG cards.",
+  "name": "magic_the_gathering_random_card_extenssion",
+  "version": "1.1.8",
+  "description": "Extension for your hometab stay more pretty.",
   "author": "Luiz Paulo Valença <luizpaulo165@gmail.com>",
   "engines": {
     "node": ">=10"
