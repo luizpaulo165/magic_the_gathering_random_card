@@ -6,7 +6,6 @@ If you like MTG's arts and the game thats's your extenssion.
 
 ### Download
 ====
-|----------|:----------:|----------:|
 | [Chrome](https://chrome.google.com/webstore/detail/magic-the-gathering-rando/hlacgeakpipeoclkgokgockcojcledlg?hl=pt-BR)  |  [Firefox](https://addons.mozilla.org/pt-BR/firefox/addon/mtg-random-card/) | [Edge](https://microsoftedge.microsoft.com/addons/detail/mrc-mtg-random-card/hdnobdghgcnlopdjlcdloakpdjeleijf)  |
 
 ### v1.0.8 released
