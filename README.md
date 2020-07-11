@@ -4,11 +4,11 @@ Magic the Gathering' cards at in your new tabs.
 This extenssion was created for the Magic the Gathering's loves always staying with conected at the card game. 
 If you like MTG's arts and the game thats's your extenssion.
 
-### Download
+Download
 ====
 | [Chrome](https://chrome.google.com/webstore/detail/magic-the-gathering-rando/hlacgeakpipeoclkgokgockcojcledlg?hl=pt-BR)  |  [Firefox](https://addons.mozilla.org/pt-BR/firefox/addon/mtg-random-card/) | [Edge](https://microsoftedge.microsoft.com/addons/detail/mrc-mtg-random-card/hdnobdghgcnlopdjlcdloakpdjeleijf)  |
 
-### v1.0.8 released
+Problem?
 ====
 Have some problem? [Report me please.](https://github.com/luizpaulo165/mtgat_random_card/issues) 
 
