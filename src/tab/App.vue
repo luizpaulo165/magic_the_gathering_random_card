@@ -7,6 +7,28 @@
                     <img src="/images/mtg_random_cards.svg" alt="MTG">
                 </span>
             </div>
+            <div items-rarity>
+                <div item>
+                    <span dot :active="is_common"></span>
+                    <span count>{{ common }}</span>
+                    <span>Common</span>
+                </div>
+                <div item>
+                    <span dot :active="is_uncommon"></span>
+                    <span count>{{ uncommon }}</span>
+                    <span>Uncommon</span>
+                </div>
+                <div item>
+                    <span dot :active="is_rare"></span>
+                    <span count>{{ rare }}</span>
+                    <span>Rare</span>
+                </div>
+                <div item>
+                    <span dot :active="is_mythic"></span>
+                    <span count>{{ mythic }}</span>
+                    <span>Mythic</span>
+                </div>
+            </div>
         </div>
         <div bg-card-page v-if="!loading">
             <span v-if="card.card_faces && card.card_faces[0].image_uris" :style="{'background-image':'url('+ card.card_faces[0].image_uris.art_crop +')'}" :active="loadingDone"></span>
@@ -141,14 +163,17 @@ export default {
             year: null,
             manaCost: null,
             manaCostArray: [],
-            colorConcat: []
+            colorConcat: [],
+
+            common: 0,
+            is_common: false,
+            uncommon: 0,
+            is_uncommon: false,
+            rare: 0,
+            is_rare: false,
+            mythic: 0,
+            is_mythic: false,
         }
-    },
-    mounted() {
-        const today = new Date();
-        const year = today.getFullYear();
-        this.year = year;
-        this.selectCard();
     },
     filters: {
         removeComma(value) {
@@ -164,6 +189,28 @@ export default {
             return string.replace(/\{(.*?)\}/gm, "<span class='card-symbol card-symbol-$1'>$1</span>").replace(/(.+?\n\n|.+?$)/gm, '<p>$1</p>').replace(/\((.*?)\)/gm, '<i>($1)</i>');
         }
     },
+    mounted() {
+        const today = new Date();
+        const year = today.getFullYear();
+        this.year = year;
+        this.selectCard();
+        this.createStorage();
+        this.setStorageData();
+    },
+    watch: {
+        common(value) {
+            localStorage.common = value;
+        },
+        uncommon(value) {
+            localStorage.uncommon = value;
+        },
+        rare(value) {
+            localStorage.rare = value;
+        },
+        mythic(value) {
+            localStorage.mythic = value;
+        }
+    },
     methods: {
         flipAction() {
             this.flipCard = !this.flipCard;
@@ -172,7 +219,7 @@ export default {
             const that = this;
             this.loading = true;
             const cabuloso = 'https://api.scryfall.com/cards/named?fuzzy=bfm-(big-furry-monster)';
-            const url = 'https://api.scryfall.com/cards/named?fuzzy=luminous-broodmoth';
+            const url = 'https://api.scryfall.com/cards/named?fuzzy=island';
             const urlDuo = 'https://api.scryfall.com/cards/named?fuzzy=nicol-bolas-the-ravager-nicol-bolas-the-arisen';
             const urlRandom = 'https://api.scryfall.com/cards/random';
 
@@ -181,7 +228,6 @@ export default {
                that.loading = false;
 
             //    console.log(that.card)
-
                 if (response.data.card_faces) {
                     response.data.card_faces.filter(cur => {
                         that.manaCostArray.push(this.$options.filters.manaConvert(cur.mana_cost))
@@ -205,12 +251,48 @@ export default {
                     })
                 }
 
-               setTimeout(() => {
-                   that.loadingDone = true;
-               }, 1000)
+                setTimeout(() => {
+                    that.loadingDone = true;
+                    this.plusRarity(that.card.rarity);
+                }, 200)
             }).catch(function (error) {
                 // console.log(error);
             });
+        },
+        createStorage() {
+            // Lads
+            if (!localStorage.common) localStorage.setItem('common', 0);
+            if (!localStorage.uncommon) localStorage.setItem('uncommon', 0);
+            if (!localStorage.rare) localStorage.setItem('rare', 0);
+            if (!localStorage.mythic) localStorage.setItem('mythic', 0);
+        },
+        setStorageData() {
+            if (localStorage.common) this.common = localStorage.common;
+            if (localStorage.uncommon) this.uncommon = localStorage.uncommon;
+            if (localStorage.rare) this.rare = localStorage.rare;
+            if (localStorage.mythic) this.mythic = localStorage.mythic;
+        },
+        plusRarity(key) {
+            if (key == 'common') {
+                localStorage.common = Number(localStorage.common)+1;
+                this.is_common = true;
+                this.setStorageData();
+            }
+            if (key == 'uncommon') {
+                localStorage.uncommon = Number(localStorage.uncommon)+1;
+                this.is_uncommon = true;
+                this.setStorageData();
+            }
+            if (key == 'rare') {
+                localStorage.rare = Number(localStorage.rare)+1;
+                this.is_rare= true;
+                this.setStorageData();
+            }
+            if (key == 'mythic') {
+                localStorage.mythic = Number(localStorage.mythic)+1;
+                this.is_mythic = true;
+                this.setStorageData();
+            }
         }
     }
 }

@@ -268,7 +268,7 @@ pre{
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    border-radius:26px;
+    border-radius:22px;
 }
 [card-preview] .img-card img{
     box-shadow: -34px 34px 16px rgba(0,0,0,0.2);
@@ -336,7 +336,7 @@ pre{
 .flip-box-front .card-foil,
 .flip-box-back .card-foil{
     width:72%;
-    border-radius:26px;
+    border-radius:22px;
 }
 .flip-box-front img,
 .flip-box-back img{
@@ -587,4 +587,47 @@ pre{
 }
 [legalities] [item] span.legal:before{
     background:#3d9c31;
+}
+
+[items-rarity]{
+    background: rgba(255,255,255,0.15);
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    position:absolute;
+    top:50%;
+    right:30px;
+    transform:translateY(-50%);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+[items-rarity] [item]{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding:0 10px;
+    position:relative;
+}
+[items-rarity] [item] span{
+    font-size:11px;
+    color:#fff;
+}
+[items-rarity] [item] span[dot]{
+    background:#3d9c31;
+    width:10px;
+    height:10px;
+    display:block;
+    position: absolute;
+    bottom:-15px;
+    left:50%;
+    transform:translateX(-50%);
+    border-radius:50%;
+    opacity:0;
+    transition:0.1s all ease-in-out;
+}
+[items-rarity] [item] span[dot][active="true"]{
+    opacity:1;
+    transition:0.3s all ease-in-out;
 }
